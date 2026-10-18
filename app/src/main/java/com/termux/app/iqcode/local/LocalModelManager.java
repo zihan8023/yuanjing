@@ -55,13 +55,14 @@ public final class LocalModelManager {
         }
     }
 
-    /** Qwen2.5-Coder GGUF 档位（q4_K_M 量化，工具调用能力：>=1.5B 支持）。 */
+    /** Qwen2.5-Coder GGUF 档位（q4_K_M 量化，工具调用能力：>=1.5B 支持）。
+     *  文件名以 ModelScope 官方仓库 Qwen/Qwen2.5-Coder-{N}B-Instruct-GGUF 实际文件名为准（全小写）。 */
     private static final ModelDef[] CATALOG = {
-        new ModelDef("qwen2.5-coder-0.5b-q4",  "Qwen2.5-Coder-0.5B-Instruct-Q4_K_M.gguf",  400, 1800,  8192,  false),
-        new ModelDef("qwen2.5-coder-1.5b-q4", "Qwen2.5-Coder-1.5B-Instruct-Q4_K_M.gguf", 1000, 3500,  8192,  true),
-        new ModelDef("qwen2.5-coder-3b-q4",   "Qwen2.5-Coder-3B-Instruct-Q4_K_M.gguf",   2000, 6000,  16384, true),
-        new ModelDef("qwen2.5-coder-7b-q4",   "Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf",   4400, 10000, 16384, true),
-        new ModelDef("qwen2.5-coder-14b-q4", "Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf",   8500, 18000, 16384, true),
+        new ModelDef("qwen2.5-coder-0.5b-q4",  "qwen2.5-coder-0.5b-instruct-q4_k_m.gguf",  470, 1800,  8192,  false),
+        new ModelDef("qwen2.5-coder-1.5b-q4", "qwen2.5-coder-1.5b-instruct-q4_k_m.gguf",  1066, 3500,  8192,  true),
+        new ModelDef("qwen2.5-coder-3b-q4",   "qwen2.5-coder-3b-instruct-q4_k_m.gguf",   2008, 6000,  16384, true),
+        new ModelDef("qwen2.5-coder-7b-q4",   "qwen2.5-coder-7b-instruct-q4_k_m.gguf",   4467, 10000, 16384, true),
+        new ModelDef("qwen2.5-coder-14b-q4", "qwen2.5-coder-14b-instruct-q4_k_m.gguf",   8572, 18000, 16384, true),
     };
 
     public static ModelDef def(String id) {

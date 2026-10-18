@@ -5718,7 +5718,8 @@ public final class MainActivity extends Activity {
 
         String binReason=LocalModelManager.missingBinaryReason();
         TextView binRow=text(binReason==null?"✓ llama-server 引擎已就绪":"⚠ "+binReason,12,binReason==null?GREEN:ACCENT);
-        binRow.setPadding(dp(2),dp(4),dp(2),dp(6));form.addView(binRow,lp(-1,-2));
+        binRow.setPadding(dp(12),dp(8),dp(12),dp(8));binRow.setBackground(round(SURFACE_3,12,Color.TRANSPARENT,0));
+        LinearLayout.LayoutParams binLp=new LinearLayout.LayoutParams(-1,-2);binLp.setMargins(0,0,0,dp(6));form.addView(binRow,binLp);
 
         String rec;
         try{
@@ -5727,7 +5728,7 @@ public final class MainActivity extends Activity {
             rec="设备档位 "+dp.tier()+" · 内存 "+dp.totalRamMb+"MB（可用 "+dp.availRamMb+"MB）"+
                 (recommended==null?"；当前设备无法运行任何本地模型":"；本机推荐：\n"+recommended.id+"（"+recommended.sizeMb+"MB，需内存 "+recommended.minRamMb+"MB）");
         }catch(Throwable t){rec="设备信息读取失败";}
-        TextView recRow=text(rec,11.5f,MUTED);recRow.setLineSpacing(0,1.15f);recRow.setPadding(dp(2),0,dp(2),dp(8));form.addView(recRow,lp(-1,-2));
+        TextView recRow=text(rec,11.5f,MUTED);recRow.setLineSpacing(0,1.15f);recRow.setPadding(dp(12),dp(8),dp(12),dp(8));recRow.setBackground(round(SURFACE_3,12,Color.TRANSPARENT,0));recRow.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);form.addView(recRow,lp(-1,-2));
 
         final LinearLayout list=vbox();form.addView(list,lp(-1,-2));
         refreshLocalModelList(list,dialog);
@@ -5737,7 +5738,7 @@ public final class MainActivity extends Activity {
         styleDialogWindow(dialog,dialogWidthPx(720),Math.min(dp(640),(int)(getResources().getDisplayMetrics().heightPixels*.88f)));
     }
 
-    /** 重建模型列表（每行：模型信息 + 推荐标签 + 下载/删除按钮 + 下载进度）。 */
+    /** 重建模型列表（每行卡片：模型名 + 状态标签 chip + 详情 + 下载/删除按钮 + 下载进度）。 */
     private void refreshLocalModelList(final LinearLayout list,final Dialog dialog){
         list.removeAllViews();
         DeviceProfile profile=null;
@@ -5746,27 +5747,28 @@ public final class MainActivity extends Activity {
         for(int i=0;i<defs.length;i++){
             final LocalModelManager.ModelDef def=defs[i];
             final boolean downloaded=LocalModelManager.isDownloaded(def);
-            // 按设备可用内存给每个模型打标签：推荐 / 可运行 / 内存不足
-            String badge="";int badgeColor=TEXT;
+            // 按设备可用内存给每个模型打标签：推荐 / 可运行 / 内存不足（chip 化）
+            String badge="";int chipBg=0,chipFg=TEXT;
             if(profile!=null){
-                if(def.minRamMb<=profile.availRamMb*0.7f){badge="推荐";badgeColor=ACCENT;}
-                else if(def.minRamMb<=profile.availRamMb){badge="可运行";badgeColor=GREEN;}
-                else{badge="内存不足";badgeColor=RED;}
+                if(def.minRamMb<=profile.availRamMb*0.7f){badge="推荐";chipBg=Color.argb(45,56,189,248);chipFg=ACCENT;}
+                else if(def.minRamMb<=profile.availRamMb){badge="可运行";chipBg=Color.argb(45,80,200,120);chipFg=GREEN;}
+                else{badge="内存不足";chipBg=Color.argb(45,248,113,113);chipFg=RED;}
             }
-            LinearLayout row=hbox();row.setGravity(Gravity.CENTER_VERTICAL);row.setPadding(dp(12),dp(8),dp(12),dp(8));row.setBackground(round(SURFACE_3,14,Color.TRANSPARENT,0));
-            LinearLayout.LayoutParams rowLp=new LinearLayout.LayoutParams(-1,dp(64));rowLp.setMargins(0,0,0,dp(6));list.addView(row,rowLp);
-            TextView label=text(def.id+"\n"+def.sizeMb+"MB · 需内存 "+def.minRamMb+"MB · 上下文 "+def.contextTokens+(def.supportsTools?" · 支持工具":" · 无工具"),11.5f,downloaded?TEXT:MUTED);
+            // 卡片：纵向布局（顶部行=名称+标签+按钮；第二行=详情）
+            LinearLayout row=vbox();row.setPadding(dp(14),dp(10),dp(14),dp(10));row.setBackground(round(SURFACE_3,16,Color.TRANSPARENT,0));
+            LinearLayout.LayoutParams rowLp=new LinearLayout.LayoutParams(-1,-2);rowLp.setMargins(0,0,0,dp(8));list.addView(row,rowLp);
+            LinearLayout top=hbox();top.setGravity(Gravity.CENTER_VERTICAL);
+            TextView name=text(def.id,13,downloaded?TEXT:MUTED);name.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);top.addView(name,new LinearLayout.LayoutParams(0,-2,1));
             if(!badge.isEmpty()){
-                android.text.SpannableStringBuilder sb=new android.text.SpannableStringBuilder();
-                sb.append(def.id).append(" ").append(badge);
-                sb.setSpan(new android.text.style.ForegroundColorSpan(badgeColor),sb.length()-badge.length(),sb.length(),android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                sb.append("\n").append(def.sizeMb+"MB · 需内存 "+def.minRamMb+"MB · 上下文 "+def.contextTokens+(def.supportsTools?" · 支持工具":" · 无工具"));
-                label.setText(sb);
+                TextView chip=text(badge,10,chipFg);chip.setGravity(Gravity.CENTER);chip.setPadding(dp(8),dp(3),dp(8),dp(3));chip.setBackground(round(chipBg,11,Color.TRANSPARENT,0));
+                LinearLayout.LayoutParams cl=new LinearLayout.LayoutParams(-2,-2);cl.setMargins(0,0,dp(10),0);top.addView(chip,cl);
             }
-            label.setLineSpacing(0,1.12f);label.setGravity(Gravity.CENTER_VERTICAL);row.addView(label,new LinearLayout.LayoutParams(0,dp(62),1));
             final TextView btn=text(downloaded?"删除":"下载",12,downloaded?RED:GREEN);
             btn.setGravity(Gravity.CENTER);btn.setPadding(dp(16),0,dp(16),0);btn.setBackground(round(SURFACE_3,16,downloaded?Color.argb(80,255,80,80):Color.argb(80,80,180,120),1));
-            row.addView(btn,lp(dp(92),dp(44)));
+            top.addView(btn,lp(dp(88),dp(40)));
+            row.addView(top,lp(-1,-2));
+            TextView detail=text(def.sizeMb+"MB · 需内存 "+def.minRamMb+"MB · 上下文 "+def.contextTokens+(def.supportsTools?" · 支持工具":" · 无工具"),11,MUTED);
+            detail.setLineSpacing(0,1.1f);LinearLayout.LayoutParams dl=new LinearLayout.LayoutParams(-1,-2);dl.setMargins(0,dp(5),0,0);row.addView(detail,dl);
             if(downloaded){
                 btn.setOnClickListener(v->{
                     java.io.File f=new java.io.File(LocalModelManager.modelsDir(),def.ggufFile);
