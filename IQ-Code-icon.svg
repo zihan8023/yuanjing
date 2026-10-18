@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <!-- 暖墨底：夜CLASSIC同族，几乎察觉不到的纵向明暗，不做彩色渐变 -->
+    <linearGradient id="ink" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#232019"/>
+      <stop offset="100%" stop-color="#171512"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 底板 -->
+  <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#ink)"/>
+  <rect x="24" y="24" width="464" height="464" rx="116" fill="none" stroke="#EEEAE4" stroke-opacity="0.10" stroke-width="4"/>
+
+  <!-- 左上 IQ 字标：描边小牌，奶油白 -->
+  <rect x="76" y="88" width="132" height="132" rx="34" fill="none" stroke="#EEEAE4" stroke-opacity="0.28" stroke-width="6"/>
+  <text x="142" y="184" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="80" fill="#EEEAE4" letter-spacing="2">IQ</text>
+
+  <!-- 终端提示符 >_ ：纯白，墨底上最亮的一笔 -->
+  <path d="M138 296 l86 62 -86 62" fill="none" stroke="#F2EFE9" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="268" y="380" width="128" height="40" rx="20" fill="#F2EFE9"/>
+
+  <!-- 运行状态点：苦绿，夜色里像终端在线灯 -->
+  <circle cx="396" cy="128" r="24" fill="#7EB288"/>
+  <circle cx="396" cy="128" r="24" fill="none" stroke="#171512" stroke-opacity="0.55" stroke-width="8"/>
+</svg>

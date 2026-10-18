@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <!-- 画家调色盘：外圈 + 四个色格 + 拇指孔（描边与色格分开，便于整体 setTint 后仍然清晰） -->
+  <path android:pathData="M12,12m-8.6,0a8.6,8.6 0 1,0 17.2,0a8.6,8.6 0 1,0 -17.2,0" android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.6"/>
+  <path android:pathData="M15.3,14.6m-1.7,0a1.7,1.7 0 1,0 3.4,0a1.7,1.7 0 1,0 -3.4,0" android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.6"/>
+  <path android:pathData="M8,9.7m-1.35,0a1.35,1.35 0 1,0 2.7,0a1.35,1.35 0 1,0 -2.7,0" android:fillColor="#FFFFFFFF"/>
+  <path android:pathData="M12,7.4m-1.35,0a1.35,1.35 0 1,0 2.7,0a1.35,1.35 0 1,0 -2.7,0" android:fillColor="#FFFFFFFF"/>
+  <path android:pathData="M16,9.7m-1.35,0a1.35,1.35 0 1,0 2.7,0a1.35,1.35 0 1,0 -2.7,0" android:fillColor="#FFFFFFFF"/>
+</vector>

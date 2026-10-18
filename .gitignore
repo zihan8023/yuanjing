@@ -1,0 +1,31 @@
+# Build outputs and project-local caches
+.gradle/
+.kotlin/
+build/
+dist/
+.cxx/
+.externalNativeBuild/
+*.apk
+*.apk.idsig
+*.aab
+*.class
+*.log
+*.hprof
+__pycache__/
+
+# Machine-local settings and credentials
+local.properties
+.idea/
+*.iml
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+
+# Private ZCode implementations are distributed only as a precompiled JAR
+/app/src/main/java/com/termux/app/iqcode/api/ZcodePlanProvider.java
+/app/src/main/java/com/termux/app/iqcode/api/zcode/
+
+# Local reference checkout (not an IQ Code module)
+/zcode-api/
